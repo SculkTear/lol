@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Home-Flux</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой браузер</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #time {
+            font-size: 3.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        #search {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>') no-repeat 15px center;
+            background-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        #search:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Flux Browser! 🌟 </h1>
+    <div id="time">00:00:00</div>
+    
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Поиск в Google..." autocomplete="off">
+    </div>
+
+    <script>
+        // Обновление времени
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+        // Поиск при нажатии Enter
+        document.getElementById('search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = encodeURIComponent(this.value.trim());
+                if (query) {
+                    window.location.href = `https://www.google.com/search?q=${query}`;
+                }
+            }
+        });
+        
+        // Запуск часов
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
 </body>
 </html>
-<h2>Самый лучший браузер!</h2>
